@@ -12,9 +12,10 @@ const routes: Routes = [
     loadChildren: "./pages/about/about.module#AboutModule"
   },
   {
-    path: "todos",
-    loadChildren: "./pages/todos/todos.module#TodosModule"
-  }
+    path: "post",
+    loadChildren: "./pages/post/post.module#PostModule",
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>Post Page</h1>
+  <h4>Lazy load module</h4>
+  <div class="table-search mb-4">
+    <h4>Search</h4>
+    <div class="row">
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="Search by id" [formControl]="postSearchID">
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control" placeholder="Search by title" [formControl]="postSearchTitlte">
+      </div>
+      <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Search by content" [formControl]="postSearchContent">
+      </div>
+    </div>
+  </div>
+  <div class="table-wrap -max-h-500">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">userID</th>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Content</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of sortedPosts ">
+          <th>{{post.userId}}</th>
+          <td>{{post.id}}</td>
+          <td>{{post.title}}</td>
+          <td>{{post.body}}</td>
+          <td>
+            <div class="d-flex">
+              <button class="link" routerLink="/post/{{post.id}}">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button class="link" (click)="postDelete(post.id)">
+                  <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-primary btn-md mt-3" routerLink="/post/new">Add new</button>
+</div>
