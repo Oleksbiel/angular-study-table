@@ -1,17 +1,17 @@
 <div class="container">
   <h1>Post Page</h1>
   <h4>Lazy load module</h4>
-  <div class="table-search mb-4">
+  <div class="table-search mb-4" [formGroup]="postSearchControl">
     <h4>Search</h4>
     <div class="row">
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search by id" [formControl]="postSearchID">
+        <input type="text" class="form-control" placeholder="Search by id" formControlName="postId">
       </div>
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search by title" [formControl]="postSearchTitlte">
+        <input type="text" class="form-control" placeholder="Search by title" formControlName="postTitle">
       </div>
       <div class="col-md-3">
-          <input type="text" class="form-control" placeholder="Search by content" [formControl]="postSearchContent">
+          <input type="text" class="form-control" placeholder="Search by content" formControlName="postContent">
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let post of sortedPosts ">
+        <tr *ngFor="let post of sortedPosts">
           <th>{{post.userId}}</th>
           <td>{{post.id}}</td>
           <td>{{post.title}}</td>

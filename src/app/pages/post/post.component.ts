@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from './post.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-post',
@@ -10,27 +10,23 @@ import { FormControl } from '@angular/forms';
 export class PostComponent implements OnInit {
 
   public posts;
-  public searchText: string;
   public sortedPosts;
-  public postSearchID: FormControl = new FormControl();
-  public postSearchTitlte: FormControl = new FormControl();
-  public postSearchContent: FormControl = new FormControl();
+  public postSearchControl: FormGroup;
 
   constructor(private _postServices: PostService) { }
 
   ngOnInit() {
     this.getAll();
-    this.postSearchID.valueChanges.subscribe((value) => {
-      this.sortTableById(value);
+
+    this.postSearchControl = new FormGroup({
+      postId: new FormControl(),
+      postTitle: new FormControl(),
+      postContent: new FormControl()
     });
 
-    this.postSearchTitlte.valueChanges.subscribe((value) => {
-      this.sortTableByTitle(value);
-
+    this.postSearchControl.valueChanges.subscribe((values) =>{
+      this.filterTable(values);
     });
-    // this.postSearchID.valueChanges.subscribe((value) => {
-    //   this.sortTableById(value);
-    // });
 
   }
 
@@ -40,27 +36,11 @@ export class PostComponent implements OnInit {
   }
 
   public postDelete(post: number) {
-    console.log(this.postSearchID);
     this._postServices.postDelete(post);
     this.getAll();
   }
 
-  public sortTableById(value: number) {
-    if ( !value ) {
-      this.sortedPosts = this.posts;
-      return false;
-    }
-
-    this.sortedPosts = this.posts.filter(post => +post.id === +value );
+  public filterTable(values) {
+    this.sortedPosts = this.posts.filter(post =>  (values.postId ? +post.id === +values.postId : true) && (values.postTitle ? post.title.includes(values.postTitle) : true) && (values.postContent ? post.body.includes(values.postContent) : true)) ;
   }
-
-  public sortTableByTitle(value: string) {
-    if ( !value.length ) {
-      this.sortedPosts = this.posts;
-      return false;
-    }
-    this.sortedPosts = this.posts.filter(post => post.title.includes(value));
-  }
-
-
 }
