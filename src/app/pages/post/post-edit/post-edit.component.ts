@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
 import { PostService } from '../post.service';
+import { TPost } from '../post';
 
 @Component({
   selector: 'app-post-edit',
@@ -12,7 +12,7 @@ import { PostService } from '../post.service';
 export class PostEditComponent implements OnInit {
 
 
-  public post;
+  public post: TPost;
 
   constructor(
     private location: Location,

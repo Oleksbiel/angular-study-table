@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from './post.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TPost } from './post';
 
 @Component({
   selector: 'app-post',
@@ -9,8 +10,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class PostComponent implements OnInit {
 
-  public posts;
-  public sortedPosts;
+  public posts: Array<TPost>;
+  public sortedPosts: Array<TPost>;
   public postSearchControl: FormGroup;
 
   constructor(private _postServices: PostService) { }
