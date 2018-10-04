@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TPost } from './post';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,32 +9,23 @@ import { TPost } from './post';
 
 export class PostService {
 
-  public posts: Array<TPost> = [{
-    'id': 1,
-    'title': 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-    'body': 'quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto'
-    },
-    {
-    'id': 2,
-    'title': 'qui est esse',
-    'body': 'est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla'
-    },
-    {
-    'id': 1232,
-    'title': 'ea molestias quasi exercitationem repellat qui ipsa sit aut',
-    'body': 'et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut'
-    },
-    {
-    'id': 4,
-    'title': 'eum et est occaecati',
-    'body': 'ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit'
-    }
-    ];
+  public posts: Array<TPost>;
 
-  constructor() { }
+  constructor(private _http: HttpClient) {
 
-  public getAll() {
-    return this.posts;
+    //setTimeout(() => {
+      // this.posts = Posts;
+    //}, 500);
+  }
+
+  //Емулируем http  через observable обьект
+  // public getAll(): Array<TPost> {
+
+  //   return this.posts;
+  // }
+
+  public getAll(): Observable<any> {
+    return this._http.get('https://jsonplaceholder.typicode.com/posts');
   }
 
   public postDelete(postID: number ) {
@@ -46,5 +38,6 @@ export class PostService {
   public getPost(postID: number) {
     return this.posts.find(posts => posts.id === postID);
   }
+  //метод фильтрации внутри сервиса
 
 }

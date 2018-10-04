@@ -19,16 +19,14 @@
     <table class="table table-sm">
       <thead>
         <tr>
-          <th scope="col">userID</th>
-          <th scope="col">ID</th>
-          <th scope="col">Title</th>
-          <th scope="col">Content</th>
+          <th scope="col" (click)="sortTable('postID')">ID</th>
+          <th scope="col" (click)="sortTable('title')">Title</th>
+          <th scope="col" (click)="sortTable('body')">Content</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let post of sortedPosts">
-          <th>{{post.userId}}</th>
+        <tr *ngFor="let post of posts">
           <td>{{post.id}}</td>
           <td>{{post.title}}</td>
           <td>{{post.body}}</td>

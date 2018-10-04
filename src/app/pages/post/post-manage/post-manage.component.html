@@ -1,0 +1,29 @@
+<div class="container">
+  <h1  class="mb-5">Post new</h1>
+  <form class="form" (ngSubmit)="postSave()"  [formGroup]="postManageControl">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="postTitle" [ngClass]="{ 'is-invalid': f.postTitle.dirty && f.postTitle.invalid }">
+          <div *ngIf="f.postTitle.dirty && f.postTitle.invalid" class="invalid-feedback">
+              <div *ngIf="f.postTitle.hasError('required')">Title is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <textarea class="form-control height-200" formControlName="postContent" [ngClass]="{ 'is-invalid': submitted && f.postContent.errors }"></textarea>
+          <div *ngIf="submitted && f.postContent.errors" class="invalid-feedback">
+              <div *ngIf="f.postContent.errors.required">Content is required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="div" >
+      <button class="btn btn-primary btn-md">Save</button>
+    </div>
+  </form>
+</div>
+

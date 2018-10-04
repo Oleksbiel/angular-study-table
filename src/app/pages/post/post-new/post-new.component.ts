@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
-import { TPost } from '../post';
+//import { TPost } from '../post';
 
 @Component({
   selector: 'app-post-new',
@@ -11,7 +11,7 @@ import { TPost } from '../post';
 })
 export class PostNewComponent implements OnInit {
   public post: TPost;
-  public submitted: boolean = false;
+  public submitted: Boolean = false;
 
   public postTitle: FormControl = new FormControl('', [
     Validators.minLength(2),
@@ -34,19 +34,18 @@ export class PostNewComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
   get f() { return this.postForm.controls; }
 
   public postSave() {
 
-    this.submitted = true;
+  this.submitted = true;
 
-    // stop here if form is invalid
-    if (this.postForm.invalid) {
-        return;
-    }
+  // stop here if form is invalid
+  if (this.postForm.invalid) {
+      return;
+  }
 
 
 
@@ -61,6 +60,7 @@ export class PostNewComponent implements OnInit {
   }
 
   public uniqID () {
+
 		let date = new Date();
 		let timestamp = date.getTime();
     return timestamp;

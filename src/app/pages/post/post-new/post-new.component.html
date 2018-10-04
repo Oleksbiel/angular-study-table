@@ -4,9 +4,9 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <input type="text" class="form-control" formControlName="postTitle" [ngClass]="{ 'is-invalid': submitted && f.postTitle.errors }">
-            <div *ngIf="submitted && f.postTitle.errors" class="invalid-feedback">
-                <div *ngIf="f.postTitle.errors.required">Title is required</div>
+            <input type="text" class="form-control" formControlName="postTitle" [ngClass]="{ 'is-invalid': f.postTitle.dirty && f.postTitle.invalid }">
+            <div *ngIf="f.postTitle.dirty && f.postTitle.invalid" class="invalid-feedback">
+                <div *ngIf="f.postTitle.hasError('required')">Title is required</div>
             </div>
           </div>
         </div>

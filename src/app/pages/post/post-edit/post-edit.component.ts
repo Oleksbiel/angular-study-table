@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from '../post.service';
-import { TPost } from '../post';
 
 @Component({
   selector: 'app-post-edit',
@@ -31,6 +30,7 @@ export class PostEditComponent implements OnInit {
   }
 
   goBack() {
+    //this.location.
     this.location.back();
   }
 
