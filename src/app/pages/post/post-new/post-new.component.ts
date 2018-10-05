@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
-//import { TPost } from '../post';
 
 @Component({
   selector: 'app-post-new',
@@ -49,22 +48,22 @@ export class PostNewComponent implements OnInit {
 
 
 
-    this.post = {
-      id: this.uniqID(),
-      title: this.postForm.value.postTitle,
-      body: this.postForm.value.postContent
-    };
+    // this.post = {
+    //   id: this.uniqID(),
+    //   title: this.postForm.value.postTitle,
+    //   body: this.postForm.value.postContent
+    // };
 
-    this._postServices.postAdd(this.post);
-    this.router.navigate(['post'])
+    // this._postServices.postAdd(this.post);
+    // this.router.navigate(['post'])
   }
 
-  public uniqID () {
+  // public uniqID () {
 
-		let date = new Date();
-		let timestamp = date.getTime();
-    return timestamp;
+	// 	let date = new Date();
+	// 	let timestamp = date.getTime();
+  //   return timestamp;
 
-	}
+	// }
 
 }

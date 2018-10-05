@@ -16,7 +16,7 @@ import { TableSearchComponent } from './table-search/table-search.component';
     CommonModule,
     PostRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [PostComponent, PostEditComponent, PostNewComponent, PostManageComponent, TableSearchComponent]
 })

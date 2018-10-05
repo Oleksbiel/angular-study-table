@@ -14,8 +14,8 @@
     <div class="row">
       <div class="col-md-5">
         <div class="form-group">
-          <textarea class="form-control height-200" formControlName="postContent" [ngClass]="{ 'is-invalid': submitted && f.postContent.errors }"></textarea>
-          <div *ngIf="submitted && f.postContent.errors" class="invalid-feedback">
+          <textarea class="form-control height-200" formControlName="postContent" [ngClass]="{ 'is-invalid': f.postContent.dirty && f.postContent.invalid }"></textarea>
+          <div *ngIf="f.postContent.dirty && f.postContent.invalid" class="invalid-feedback">
               <div *ngIf="f.postContent.errors.required">Content is required</div>
           </div>
         </div>

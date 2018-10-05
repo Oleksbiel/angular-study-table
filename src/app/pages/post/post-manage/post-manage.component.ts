@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-post-manage',
@@ -10,19 +11,20 @@ import { Router } from '@angular/router';
 })
 export class PostManageComponent implements OnInit {
 
-  public postID: number;
+  public postData: TPost;
   public newUser: Boolean = false;
   public postManageControl: FormGroup;
   public submitted: Boolean = false;
-  public newPost: Array<TPost>;
+  public newPost: TPost;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _postServices: PostService
   ) {
     this.route.params.subscribe(params => {
       if (params.hasOwnProperty('postID')){
-        this.postID = params.postID;
+        this.getPost(params.postID);
       } else {
         this.newUser = true;
       }
@@ -31,33 +33,35 @@ export class PostManageComponent implements OnInit {
 
   ngOnInit() {
     this.postManageControl = new FormGroup({
-      postId: new FormControl(),
-      postTitle: new FormControl(),
-      postContent: new FormControl()
+      postTitle: new FormControl('', [ Validators.required, Validators.minLength(2)]),
+      postContent: new FormControl('', [ Validators.required, Validators.minLength(2)])
     });
   }
 
   get f() { return this.postManageControl.controls; }
 
   public postSave() {
+    this.submitted = true;
 
-  this.submitted = true;
-
-  // stop here if form is invalid
-  if (this.postManageControl.invalid) {
-      return;
-  }
+    if (this.postManageControl.invalid) {
+        return;
+    }
 
 
 
     this.newPost = {
+      userId: this.uniqID(),
       id: this.uniqID(),
       title: this.postManageControl.value.postTitle,
       body: this.postManageControl.value.postContent
     };
 
-    // this._postServices.postAdd(this.post);
-    this.router.navigate(['posts']);
+      this._postServices.addPost(this.newPost);
+      this.router.navigate(['posts']);
+  }
+
+  public getPost(postID: number) {
+    this._postServices.getPost(postID).subscribe(post => this.postData = post);
   }
 
   public uniqID () {

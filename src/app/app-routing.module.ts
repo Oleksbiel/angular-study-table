@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: "./pages/about/about.module#AboutModule"
   },
   {
-    path: "post",
+    path: "posts",
     loadChildren: "./pages/post/post.module#PostModule",
   },
   { path: '**', redirectTo: '' }

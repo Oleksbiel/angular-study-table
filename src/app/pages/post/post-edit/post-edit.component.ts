@@ -20,18 +20,18 @@ export class PostEditComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      this.getPost();
+      // this.getPost();
   }
 
-  public getPost() {
+  // public getPost() {
 
-    const id = +this.route.snapshot.paramMap.get('postID');
-    this.post = this._postServices.getPost(id);
-  }
+  //   const id = +this.route.snapshot.paramMap.get('postID');
+  //   this.post = this._postServices.getPost(id);
+  // }
 
-  goBack() {
-    //this.location.
-    this.location.back();
-  }
+  // goBack() {
+  //   //this.location.
+  //   this.location.back();
+  // }
 
 }

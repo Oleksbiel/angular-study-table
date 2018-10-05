@@ -32,7 +32,7 @@
           <td>{{post.body}}</td>
           <td>
             <div class="d-flex">
-              <button class="link" routerLink="/post/{{post.id}}">
+              <button class="link" routerLink="/posts/{{post.id}}">
                 <i class="fas fa-pencil-alt"></i>
               </button>
               <button class="link" (click)="postDelete(post.id)">
@@ -44,5 +44,5 @@
       </tbody>
     </table>
   </div>
-  <button class="btn btn-primary btn-md mt-3" routerLink="/post/new">Add new</button>
+  <button class="btn btn-primary btn-md mt-3" routerLink="/posts/new">Add new</button>
 </div>
