@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, filter } from 'rxjs/operators';
 
 
 
@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class PostService {
 
-  private postsUrl = 'http://localhost:3000/posts/';
+  private postsUrl = 'http://localhost:3000/posts';
   public posts: Array<TPost>;
 
   constructor(private _http: HttpClient) {
@@ -46,17 +46,26 @@ export class PostService {
     const url = `${this.postsUrl}/${postID}`;
     return this._http.get(url);
   }
+  public editPost( post:TPost ) {
+    const url = `${this.postsUrl}/${post.id}`;
+    return this._http.patch<TPost>(url, post, httpOptions);
+  }
 
 
   public deletePost (postID: number): Observable<TPost> {
     const url = `${this.postsUrl}/${postID}`;
     return this._http.delete<TPost>(url, httpOptions);
   }
+
   public addPost (post: TPost): Observable<TPost> {
-    console.log(post);
     return this._http.post<TPost>(this.postsUrl, post, httpOptions);
   }
 
+  public filterPosts (searchField)  {
+    return this.getAll().pipe(map(posts => {
+      return posts.filter(post => post.title.includes(searchField) || post.body.includes(searchField));
+    }));
+  }
 
   //метод фильтрации внутри сервиса
 

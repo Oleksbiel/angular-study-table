@@ -1,6 +1,6 @@
 <div class="container">
-  <h1  class="mb-5">Post new</h1>
-  <form class="form" (ngSubmit)="postSave()"  [formGroup]="postManageControl">
+  <h1  class="mb-5">Post {{ newPost ? "New" : "Edit"}}</h1>
+  <form class="form" (ngSubmit)="newPost ? postSave() : postEdit()"  [formGroup]="postManageControl">
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">

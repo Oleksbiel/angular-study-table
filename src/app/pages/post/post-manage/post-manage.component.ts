@@ -11,11 +11,11 @@ import { PostService } from '../post.service';
 })
 export class PostManageComponent implements OnInit {
 
-  public postData: TPost;
-  public newUser: Boolean = false;
+  public editablePostData;
+  public newPost: Boolean = false;
   public postManageControl: FormGroup;
   public submitted: Boolean = false;
-  public newPost: TPost;
+  public postData: TPost;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,7 @@ export class PostManageComponent implements OnInit {
       if (params.hasOwnProperty('postID')){
         this.getPost(params.postID);
       } else {
-        this.newUser = true;
+        this.newPost = true;
       }
     });
    }
@@ -37,31 +37,66 @@ export class PostManageComponent implements OnInit {
       postContent: new FormControl('', [ Validators.required, Validators.minLength(2)])
     });
   }
-
   get f() { return this.postManageControl.controls; }
 
   public postSave() {
+    
     this.submitted = true;
 
     if (this.postManageControl.invalid) {
         return;
     }
 
-
-
-    this.newPost = {
+    this.postData = {
       userId: this.uniqID(),
       id: this.uniqID(),
       title: this.postManageControl.value.postTitle,
       body: this.postManageControl.value.postContent
     };
 
-      this._postServices.addPost(this.newPost);
+      this._postServices.addPost(this.postData).subscribe(post =>{
+        console.log('NewPost created');
+      });
+      /// когда создается новый пост потом переходит на страницу posts , но дата там старая и нужно ее обновить какой то тригер , как лучше сделать тригер , тут пост создался и сделать еше раз getPosts в компоненте post.component
       this.router.navigate(['posts']);
   }
 
+  public postEdit() {
+
+    this.submitted = true;
+
+    if (this.postManageControl.invalid) {
+        return;
+    }
+
+    this.postData = {
+      userId: this.editablePostData.userId,
+      id: this.editablePostData.id,
+      title: this.postManageControl.value.postTitle,
+      body: this.postManageControl.value.postContent
+    };
+
+    this._postServices.editPost(this.postData).subscribe(post => {
+      console.log("Post edited.");
+    });
+    /// когда создается новый пост потом переходит на страницу posts , но дата там старая и нужно ее обновить какой то тригер , как лучше сделать тригер , тут пост создался и сделать еше раз getPosts в компоненте post.component
+
+    this.router.navigate(['posts']);
+
+  }
+
   public getPost(postID: number) {
-    this._postServices.getPost(postID).subscribe(post => this.postData = post);
+    this._postServices.getPost(postID).subscribe(post => {
+      this.editablePostData = post;
+      this.setFormData(post);
+    });
+  }
+
+  public setFormData(post) {
+    this.postManageControl.setValue({
+      postTitle: post.title,
+      postContent: post.body,
+    })
   }
 
   public uniqID () {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-table-search',
@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableSearchComponent implements OnInit {
 
+  @Output() searchValue: EventEmitter<number | string>  = new EventEmitter();
+  @Output() handlerReset: EventEmitter<any>  = new EventEmitter();
+  
+  public searchTitle: string;
+  
+  public searchField: number | string;
+
   constructor() { }
 
   ngOnInit() {
+
+  }
+  public search(searchData) {
+    this.searchValue.emit(searchData);
   }
 
+  public searchReset() {
+    this.searchTitle = '';
+    this.handlerReset.emit();
+  }
 }

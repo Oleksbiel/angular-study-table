@@ -1,3 +1,14 @@
-<p>
-  table-search works!
-</p>
+<div class="table-search mb-4" >
+  <h4>Search</h4>
+  <form action="">
+    <div class="row">
+      <div class="col-md-12 d-flex align-items-center justify-content-end">
+        <div class="form-group mb-0 mr-2">
+          <input type="text" class="form-control" placeholder="Search..." name="searchTitle" [(ngModel)]="searchTitle">
+        </div>
+        <button class="btn btn-primary btn-md mr-4" (click)="search(searchTitle)">Search</button>
+        <button class="btn btn-default btn-md" (click)="searchReset()">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>

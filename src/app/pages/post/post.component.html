@@ -1,27 +1,14 @@
 <div class="container">
   <h1>Post Page</h1>
   <h4>Lazy load module</h4>
-  <div class="table-search mb-4" [formGroup]="postSearchControl">
-    <h4>Search</h4>
-    <div class="row">
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search by id" formControlName="postId">
-      </div>
-      <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Search by title" formControlName="postTitle">
-      </div>
-      <div class="col-md-3">
-          <input type="text" class="form-control" placeholder="Search by content" formControlName="postContent">
-      </div>
-    </div>
-  </div>
+  <app-table-search (searchValue)="tableSearch($event)"  (handlerReset)="getAll()"></app-table-search>
   <div class="table-wrap -max-h-500">
     <table class="table table-sm">
       <thead>
         <tr>
-          <th scope="col" (click)="sortTable('postID')">ID</th>
-          <th scope="col" (click)="sortTable('title')">Title</th>
-          <th scope="col" (click)="sortTable('body')">Content</th>
+          <th scope="col" appSortTable sortDir='asc' sortTitle='id'>ID</th>
+          <th scope="col" appSortTable sortDir='asc' sortTitle='title'>Title</th>
+          <th scope="col" appSortTable sortDir='asc' sortTitle='content'>Content</th>
           <th></th>
         </tr>
       </thead>

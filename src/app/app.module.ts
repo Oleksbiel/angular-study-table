@@ -20,10 +20,7 @@ import { PostService } from './pages/post/post.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService, { dataEncapsulation: false }
-    // )
+    FormsModule
   ],
   providers: [
     PostService
