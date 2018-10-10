@@ -17,30 +17,11 @@ export class PostService {
   private postsUrl = 'http://localhost:3000/posts';
   public posts: Array<TPost>;
 
-  constructor(private _http: HttpClient) {
-
-    //setTimeout(() => {
-      // this.posts = Posts;
-    //}, 500);
-  }
-
-  //Емулируем http  через observable обьект
-
-  // public getAll(): Array<TPost> {
-
-  //   return this.posts;
-  // }
+  constructor(private _http: HttpClient) {}
 
   public getAll(): Observable<any> {
     return this._http.get(this.postsUrl);
   }
-
-  // public postDelete(postID: number ) {
-  //   return this.posts = this.posts.filter(posts => posts.id !== postID);
-  // }
-  // public postAdd(post: TPost) {
-  //   this.posts = [...this.posts, post];
-  // }
 
   public getPost(postID: number) {
     const url = `${this.postsUrl}/${postID}`;
@@ -67,6 +48,15 @@ export class PostService {
     }));
   }
 
-  //метод фильтрации внутри сервиса
+  public sortTable (sortBy: String, dir) {
+    return this.getAll().pipe(map(posts => {
+      if ( dir === 'asc' ) {
+        return posts.sort((a , b) => a.id - b.id);
+      } else {
+        return posts.sort((a , b) => b.id - a.id);
+      }
+    }));
+  }
+
 
 }
