@@ -17,7 +17,8 @@ export class PostService {
   private postsUrl = 'http://localhost:3000/posts';
   public posts: Array<TPost>;
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) {
+  }
 
   public getAll(): Observable<any> {
     return this._http.get(this.postsUrl);
@@ -31,7 +32,6 @@ export class PostService {
     const url = `${this.postsUrl}/${post.id}`;
     return this._http.patch<TPost>(url, post, httpOptions);
   }
-
 
   public deletePost (postID: number): Observable<TPost> {
     const url = `${this.postsUrl}/${postID}`;
@@ -48,15 +48,21 @@ export class PostService {
     }));
   }
 
-  public sortTable (sortBy: String, dir) {
-    return this.getAll().pipe(map(posts => {
-      if ( dir === 'asc' ) {
-        return posts.sort((a , b) => a.id - b.id);
-      } else {
-        return posts.sort((a , b) => b.id - a.id);
-      }
-    }));
-  }
-
+  // public sortPosts (sortfieldData) {
+  //   return this.getAll().pipe(map(posts => {
+  //     return posts.sort((a,b) => {
+  //       let sortTitle = sortfieldData.sortTitle;
+  //       if(sortfieldData.sortDir === 'asc'){
+  //           if(a[sortTitle] < b[sortTitle]) return -1;
+  //           if(a[sortTitle] > b[sortTitle]) return 1;
+  //           return 0;
+  //       } else {
+  //           if(a[sortTitle] > b[sortTitle]) return -1;
+  //           if(a[sortTitle] < b[sortTitle]) return 1;
+  //           return 0;
+  //       }
+  //     });
+  //   }));
+  // }
 
 }

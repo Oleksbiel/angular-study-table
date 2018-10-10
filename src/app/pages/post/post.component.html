@@ -3,26 +3,23 @@
   <h4>Lazy load module</h4>
   <app-table-search (searchValue)="tableSearch($event)"  (handlerReset)="getAll()"></app-table-search>
   <div class="table-wrap -max-h-500">
-    <s-table>
       <table class="table table-sm">
         <thead>
           <tr>
-            <th scope="col" (click)="sortTableByID()" [ngClass]="{'-active': isActiveID}">
-              <orderBy>
+            <th scope="col" >
+              <orderBy name="id" (sortDataFunc)="sortData($event)">
                 ID
               </orderBy>
-              <i class="fas fa-arrow-up" *ngIf="orderSortID === 'asc'"></i>
-              <i class="fas fa-arrow-down" *ngIf="orderSortID === 'desc'"></i>
             </th>
-            <th scope="col" (click)="sortTable('title', orderSortTitle , isActiveTitle)" [ngClass]="{'-active': isActiveTitle}">
-              Title
-              <i class="fas fa-arrow-up" *ngIf="orderSortTitle === 'asc'"></i>
-              <i class="fas fa-arrow-down" *ngIf="orderSortTitle === 'desc'"></i>
+            <th scope="col" >
+              <orderBy name="title" (sortDataFunc)="sortData($event)">
+                Title
+              </orderBy>
             </th>
-            <th scope="col" (click)="sortTable('content', orderSortTitle, isActiveContent)" [ngClass]="{'-active': isActiveContent}">
-              Content
-              <i class="fas fa-arrow-up" *ngIf="orderSortContent === 'asc'"></i>
-              <i class="fas fa-arrow-down" *ngIf="orderSortContent === 'desc'"></i>
+            <th scope="col" >
+                <orderBy name="body" (sortDataFunc)="sortData($event)">
+                    Content
+                </orderBy>
             </th>
             <th></th>
           </tr>
@@ -45,7 +42,6 @@
           </tr>
         </tbody>
       </table>
-    </s-table>
   </div>
   <button class="btn btn-primary btn-md mt-3" routerLink="/posts/new">Add new</button>
 </div>

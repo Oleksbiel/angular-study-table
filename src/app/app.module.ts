@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 
@@ -20,6 +21,7 @@ import { PostService } from './pages/post/post.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpModule,
     FormsModule
   ],
   providers: [

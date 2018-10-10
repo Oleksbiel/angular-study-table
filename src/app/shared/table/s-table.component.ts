@@ -6,9 +6,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class STableComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+   }
 
   ngOnInit() {
   }
+  
 
 }

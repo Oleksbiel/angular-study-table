@@ -10,7 +10,6 @@ import { PostManageComponent } from './post-manage/post-manage.component';
 import { TableSearchComponent } from './table-search/table-search.component';
 import { STableComponent } from '../../shared/table/s-table.component';
 import { OrderByComponent } from '../../shared/order-by/orderby.component';
-import { SortTableDirective } from '../../shared/sort-table.directive';
 
 @NgModule({
   imports: [
@@ -23,7 +22,6 @@ import { SortTableDirective } from '../../shared/sort-table.directive';
     PostComponent,
     PostManageComponent,
     TableSearchComponent,
-    SortTableDirective,
     STableComponent,
     OrderByComponent
   ]

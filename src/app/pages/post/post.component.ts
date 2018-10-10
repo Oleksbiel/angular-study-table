@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PostService } from './post.service';
+import { OrderByComponent } from '../../shared/order-by/orderby.component';
 
 @Component({
   selector: 'app-post',
@@ -8,18 +9,11 @@ import { PostService } from './post.service';
 })
 export class PostComponent implements OnInit {
 
+
   public posts: Array<TPost>;
   public sortedPosts: Array<TPost>;
 
-  public isActiveID: Boolean = false;
-  public isActiveTitle: Boolean = false;
-  public isActiveContent: Boolean = false;
-
-  public orderSortID: String =  'desc';
-  public orderSortTitle: String = 'desc';
-  public orderSortContent: String = 'desc';
-
-  constructor(private _postServices: PostService) { }
+  constructor(private _postServices: PostService) {}
 
   ngOnInit() {
 
@@ -36,16 +30,34 @@ export class PostComponent implements OnInit {
   }
 
   public tableSearch(searchTitle) {
-    this._postServices.filterPosts(searchTitle).subscribe(posts => {
+    this._postServices.filterPosts(searchTitle).subscribe(posts =>{
       this.posts = posts;
     });
-  }
-  public sortTableByID() {
-    this.isActiveID = true;
-    this._postServices.sortTable('id' , this.orderSortID ).subscribe(sortedPosts => this.posts = sortedPosts);
-    this.orderSortID = this.orderSortID === 'asc' ? 'desc' :  'asc';
-    this.isActiveTitle = false;
-    this.isActiveContent = false;
+  } 
+
+
+  public sortData(sortfieldData) {
+    // this._postServices.sortPosts(e).subscribe(posts => this.posts = posts);
+    // console.log(sortfieldData);
+    const sortedPosts = [...this.posts];
+
+    sortedPosts.sort((a,b) => {
+
+      let sortTitle = sortfieldData.sortTitle;
+
+      if(sortfieldData.sortDir === 'asc'){
+          if(a[sortTitle] < b[sortTitle]) return -1;
+          if(a[sortTitle] > b[sortTitle]) return 1;
+          return 0;
+      } else {
+          if(a[sortTitle] > b[sortTitle]) return -1;
+          if(a[sortTitle] < b[sortTitle]) return 1;
+          return 0;
+      }
+    });
+
+    this.posts = sortedPosts;
+
   }
 }
 
