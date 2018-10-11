@@ -1,47 +1,47 @@
 <div class="container">
   <h1>Post Page</h1>
   <h4>Lazy load module</h4>
-  <app-table-search (searchValue)="tableSearch($event)"  (handlerReset)="getAll()"></app-table-search>
+  <app-table-search (searchValue)="tableSearch($event)"  (handlerReset)="searchReset()"></app-table-search>
   <div class="table-wrap -max-h-500">
-      <table class="table table-sm">
-        <thead>
-          <tr>
-            <th scope="col" >
-              <orderBy name="id" (sortDataFunc)="sortData($event)">
-                ID
-              </orderBy>
-            </th>
-            <th scope="col" >
-              <orderBy name="title" (sortDataFunc)="sortData($event)">
-                Title
-              </orderBy>
-            </th>
-            <th scope="col" >
-                <orderBy name="body" (sortDataFunc)="sortData($event)">
-                    Content
-                </orderBy>
-            </th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let post of posts">
-            <td>{{post.id}}</td>
-            <td>{{post.title}}</td>
-            <td>{{post.body}}</td>
-            <td>
-              <div class="d-flex">
-                <button class="link" routerLink="/posts/{{post.id}}">
-                  <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button class="link" (click)="postDelete(post.id)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col" >
+            <orderBy name="id" (sortDataFunc)="sortData($event)">
+              ID
+            </orderBy>
+          </th>
+          <th scope="col" >
+            <orderBy name="title" (sortDataFunc)="sortData($event)">
+              Title
+            </orderBy>
+          </th>
+          <th scope="col" >
+            <orderBy name="body" (sortDataFunc)="sortData($event)" >
+                Content
+            </orderBy>
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{post.id}}</td>
+          <td>{{post.title}}</td>
+          <td>{{post.body}}</td>
+          <td>
+            <div class="d-flex">
+              <button class="link" routerLink="/posts/{{post.id}}">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button class="link" (click)="postDelete(post.id)">
+                  <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <button class="btn btn-primary btn-md mt-3" routerLink="/posts/new">Add new</button>
 </div>

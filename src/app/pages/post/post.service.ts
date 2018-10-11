@@ -28,41 +28,40 @@ export class PostService {
     const url = `${this.postsUrl}/${postID}`;
     return this._http.get(url);
   }
-  public editPost( post:TPost ) {
-    const url = `${this.postsUrl}/${post.id}`;
-    return this._http.patch<TPost>(url, post, httpOptions);
-  }
 
   public deletePost (postID: number): Observable<TPost> {
     const url = `${this.postsUrl}/${postID}`;
     return this._http.delete<TPost>(url, httpOptions);
   }
 
-  public addPost (post: TPost): Observable<TPost> {
-    return this._http.post<TPost>(this.postsUrl, post, httpOptions);
+
+  public managePost(post: TPost , newPostBool): Observable<TPost> {
+    if ( newPostBool ) {
+      return this._http.post<TPost>(this.postsUrl, post, httpOptions);
+    } else {
+      const url = `${this.postsUrl}/${post.id}`;
+      return this._http.patch<TPost>(url, post, httpOptions);
+    }
   }
 
-  public filterPosts (searchField)  {
-    return this.getAll().pipe(map(posts => {
-      return posts.filter(post => post.title.includes(searchField) || post.body.includes(searchField));
-    }));
-  }
 
-  // public sortPosts (sortfieldData) {
-  //   return this.getAll().pipe(map(posts => {
-  //     return posts.sort((a,b) => {
-  //       let sortTitle = sortfieldData.sortTitle;
-  //       if(sortfieldData.sortDir === 'asc'){
-  //           if(a[sortTitle] < b[sortTitle]) return -1;
-  //           if(a[sortTitle] > b[sortTitle]) return 1;
-  //           return 0;
-  //       } else {
-  //           if(a[sortTitle] > b[sortTitle]) return -1;
-  //           if(a[sortTitle] < b[sortTitle]) return 1;
-  //           return 0;
-  //       }
-  //     });
-  //   }));
+  // public filterPosts (searchField)  {
+  //   const url = `${this.postsUrl}?q=${searchField}`;
+  //   return this._http.get(url);
   // }
 
+  // public sortPosts (sortfieldData) {
+  //   const url = `${this.postsUrl}?_sort=${sortfieldData.sortTitle}&_order=${sortfieldData.sortDir}`;
+  //   return this._http.get(url);
+  // }
+
+  public searchSortPosts(filterData): Observable<any> {
+    const baseUrl = this.postsUrl + '?';
+    const SearchUrl = `&q=${filterData.searchTitle}`;
+    // tslint:disable-next-line:max-line-length
+    const SortUrl = `&_sort=${typeof filterData.sort === 'undefined' ? '' : filterData.sort.sortTitle}&_order=${typeof filterData.sort === 'undefined' ? '' : filterData.sort.sortDir}`;
+    // tslint:disable-next-line:max-line-length
+    const totalUrl = baseUrl + (typeof filterData.searchTitle === 'undefined' ? '' : SearchUrl) +  (typeof filterData.sort === 'undefined' ? '' : SortUrl);
+    return this._http.get(totalUrl);
+  }
 }

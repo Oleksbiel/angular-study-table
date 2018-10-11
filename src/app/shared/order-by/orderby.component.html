@@ -1,7 +1,7 @@
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center" [ngClass]="{'text-danger': isActive}">
   <span class="mr-2">
     <ng-content></ng-content>
   </span>
   <i class="fas fa-arrow-up" *ngIf="columnDir === 'asc'"></i>
   <i class="fas fa-arrow-down" *ngIf="columnDir === 'desc'"></i>
-</div> 
+</div>

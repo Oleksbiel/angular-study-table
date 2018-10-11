@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 's-table',
@@ -6,12 +6,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class STableComponent implements OnInit {
 
+  @Input() data: TPost;
+
+  public testVluae = '111111';
   constructor() {
+    console.log();
 
    }
 
-  ngOnInit() {
-  }
-  
+
 
 }

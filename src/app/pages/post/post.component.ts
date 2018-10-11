@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PostService } from './post.service';
-import { OrderByComponent } from '../../shared/order-by/orderby.component';
 
 @Component({
   selector: 'app-post',
@@ -9,9 +8,11 @@ import { OrderByComponent } from '../../shared/order-by/orderby.component';
 })
 export class PostComponent implements OnInit {
 
-
   public posts: Array<TPost>;
-  public sortedPosts: Array<TPost>;
+  public orderChange: EventEmitter<any> = new EventEmitter();
+
+  public sortedFieldData: Array<TPost>;
+  public searchTitle: String;
 
   constructor(private _postServices: PostService) {}
 
@@ -28,36 +29,31 @@ export class PostComponent implements OnInit {
   public postDelete(postID: number) {
     this._postServices.deletePost(postID).subscribe(post => this.getAll());
   }
+  public manipulateData(searchTitle , sortedPostObj) {
+    const manipPosts = {
+      searchTitle: searchTitle,
+      sort: sortedPostObj
+    };
+    this._postServices.searchSortPosts(manipPosts).subscribe(posts => this.posts = posts);
+  }
+  public searchReset () {
+    this.getAll();
+    this.searchTitle = undefined;
+  }
 
   public tableSearch(searchTitle) {
-    this._postServices.filterPosts(searchTitle).subscribe(posts =>{
-      this.posts = posts;
-    });
-  } 
-
-
+    this.searchTitle = searchTitle;
+    this.manipulateData(searchTitle, this.sortedFieldData);
+    // this._postServices.filterPosts(searchTitle).subscribe(posts => {
+    //   this.posts = posts;
+    // });
+  }
   public sortData(sortfieldData) {
-    // this._postServices.sortPosts(e).subscribe(posts => this.posts = posts);
-    // console.log(sortfieldData);
-    const sortedPosts = [...this.posts];
+    this.sortedFieldData = sortfieldData;
+    this.manipulateData(this.searchTitle, sortfieldData);
 
-    sortedPosts.sort((a,b) => {
-
-      let sortTitle = sortfieldData.sortTitle;
-
-      if(sortfieldData.sortDir === 'asc'){
-          if(a[sortTitle] < b[sortTitle]) return -1;
-          if(a[sortTitle] > b[sortTitle]) return 1;
-          return 0;
-      } else {
-          if(a[sortTitle] > b[sortTitle]) return -1;
-          if(a[sortTitle] < b[sortTitle]) return 1;
-          return 0;
-      }
-    });
-
-    this.posts = sortedPosts;
-
+    // this._postServices.sortPosts(sortfieldData).subscribe(posts => this.posts = posts);
+    this.orderChange.next(sortfieldData);
   }
 }
 
