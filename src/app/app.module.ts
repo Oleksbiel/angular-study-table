@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AppRoutingModule } from "./app-routing.module";
 
 import { PostService } from './pages/post/post.service';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PostService } from './pages/post/post.service';
     FormsModule
   ],
   providers: [
-    PostService
+    PostService,
+    {provide: APP_BASE_HREF, useValue : '/' }
   ],
   bootstrap: [AppComponent]
 })

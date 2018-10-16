@@ -9,9 +9,8 @@ export class TableSearchComponent implements OnInit {
 
   @Output() searchValue: EventEmitter<number | string>  = new EventEmitter();
   @Output() handlerReset: EventEmitter<any>  = new EventEmitter();
-  
+
   public searchTitle: string;
-  
   public searchField: number | string;
 
   constructor() { }
@@ -19,6 +18,7 @@ export class TableSearchComponent implements OnInit {
   ngOnInit() {
 
   }
+
   public search(searchData) {
     this.searchValue.emit(searchData);
   }

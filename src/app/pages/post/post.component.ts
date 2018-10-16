@@ -7,6 +7,9 @@ import { PostService } from './post.service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
+  someMethod(): any {
+    throw new Error("Method not implemented.");
+  }
 
   public posts: Array<TPost>;
   public orderChange: EventEmitter<any> = new EventEmitter();

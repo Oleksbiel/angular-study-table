@@ -13,6 +13,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PostService {
+  getObservableValue(): any {
+    throw new Error("Method not implemented.");
+  }
 
   private postsUrl = 'http://localhost:3000/posts';
   public posts: Array<TPost>;
@@ -34,7 +37,6 @@ export class PostService {
     return this._http.delete<TPost>(url, httpOptions);
   }
 
-
   public managePost(post: TPost , newPostBool): Observable<TPost> {
     if ( newPostBool ) {
       return this._http.post<TPost>(this.postsUrl, post, httpOptions);
@@ -43,17 +45,6 @@ export class PostService {
       return this._http.patch<TPost>(url, post, httpOptions);
     }
   }
-
-
-  // public filterPosts (searchField)  {
-  //   const url = `${this.postsUrl}?q=${searchField}`;
-  //   return this._http.get(url);
-  // }
-
-  // public sortPosts (sortfieldData) {
-  //   const url = `${this.postsUrl}?_sort=${sortfieldData.sortTitle}&_order=${sortfieldData.sortDir}`;
-  //   return this._http.get(url);
-  // }
 
   public searchSortPosts(filterData): Observable<any> {
     const baseUrl = this.postsUrl + '?';

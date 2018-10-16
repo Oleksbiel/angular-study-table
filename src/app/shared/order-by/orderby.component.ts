@@ -52,7 +52,7 @@ export class OrderByComponent implements OnInit , OnDestroy {
   ngOnInit() {
     this.postComponent.orderChange.pipe(takeUntil(this.destroySubject)).subscribe( sortedDataFromC => {
       this.sortedData = sortedDataFromC;
-      this.checkStatus(sortedDataFromC);
+      // this.checkStatus(sortedDataFromC);
     });
   }
   ngOnDestroy(): void {
