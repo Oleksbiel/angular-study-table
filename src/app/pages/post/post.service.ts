@@ -13,11 +13,11 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PostService {
-  getObservableValue(): any {
-    throw new Error("Method not implemented.");
-  }
+  // getObservableValue(): any {
+  //   throw new Error("Method not implemented.");
+  // }
 
-  private postsUrl = 'http://localhost:3000/posts';
+  public postsUrl = 'http://localhost:3000/posts';
   public posts: Array<TPost>;
 
   constructor(private _http: HttpClient) {
@@ -32,9 +32,9 @@ export class PostService {
     return this._http.get(url);
   }
 
-  public deletePost (postID: number): Observable<TPost> {
+  public deletePost (postID: number): Observable<number> {
     const url = `${this.postsUrl}/${postID}`;
-    return this._http.delete<TPost>(url, httpOptions);
+    return this._http.delete<number>(url, httpOptions);
   }
 
   public managePost(post: TPost , newPostBool): Observable<TPost> {

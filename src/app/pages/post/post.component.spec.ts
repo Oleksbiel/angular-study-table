@@ -1,17 +1,12 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { FormsModule , ReactiveFormsModule } from '@angular/forms';
-import {PostRoutingModule  } from './post-routing.module';
-
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { PostComponent } from './post.component';
 import { PostService } from './post.service';
-import { Observable, of } from 'rxjs';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PostModule } from './post.module';
+import { By } from '@angular/platform-browser';
 import { TableSearchComponent } from './table-search/table-search.component';
 import { OrderByComponent } from '../../shared/order-by/orderby.component';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { RouterModule } from '@angular/router';
-import { PostManageComponent } from './post-manage/post-manage.component';
-import { APP_BASE_HREF } from '@angular/common';
 
 describe('PostComponent', () => {
   let component: PostComponent;
@@ -19,19 +14,14 @@ describe('PostComponent', () => {
   // tslint:disable-next-line:no-shadowed-variable
   let PostService: PostService;
   let spy: jasmine.Spy;
-  let posts = [{
-      userId: 1,
-      id: 5,
-      title: 'aaaaa222',
-      // tslint:disable-next-line:max-line-length
-      body: 'repudiandae veniam quaerat sunt sednalias aut fugiat sit autem sed estnvoluptatem omnis possimus esse voluptatibus quisnest aut tenetur dolor neque'
-    }];
+  let de;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, ReactiveFormsModule, PostRoutingModule , RouterModule.forRoot([]), HttpClientTestingModule],
-      declarations: [  PostManageComponent , PostComponent , TableSearchComponent , OrderByComponent ],
-      providers: [PostService, {provide: APP_BASE_HREF, useValue : '/' }]
+      imports: [PostModule, HttpClientTestingModule, RouterTestingModule],
+
+      declarations: [  ],
+      providers: []
 
     })
     .compileComponents();
@@ -40,27 +30,42 @@ describe('PostComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PostComponent);
     component = fixture.componentInstance;
-    // PostService = fixture.debugElement.injector.get(PostService);
-    // spy = spyOn(PostService, 'getAll').and.returnValue(of(posts));
+    de = fixture.debugElement;
 
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
-  // afterEach(() => {
-  //   fixture.destroy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should call getAll', () => {
+    let getAllSpy = spyOn(component, 'getAll');
+    expect(getAllSpy.call).toBeTruthy();
+  });
 
-  // it('should call postService', () => {
-  //   component.someMethod();
-  //   expect(spy.calls.any()).toBeTruthy();
-  // });
+  it('should be called  searchReset ', () => {
+    spyOn(component, 'searchReset');
+    const childDir = de.query(By.directive(TableSearchComponent));
+    const cmp = childDir.componentInstance;
+    cmp.handlerReset.emit();
+    expect(component.searchReset).toHaveBeenCalled();
+    expect(component.searchTitle).toBeUndefined();
+  });
 
-  // it('should set posts', () => {
-  //   component.someMethod();
-  //   expect(component.posts).toEqual(posts);
-  // });
+  it('should be called  sortDataFunc with data', () => {
+    spyOn(component, 'sortData');
+    const childDir = de.query(By.directive(OrderByComponent));
+    const cmp = childDir.componentInstance;
+    cmp.sortDataFunc.emit(1);
+    expect(component.sortData).toHaveBeenCalledWith(1);
+  });
+
+  it('should be called  tableSearch with data', () => {
+    spyOn(component, 'tableSearch');
+    const childDir = de.query(By.directive(TableSearchComponent));
+    const cmp = childDir.componentInstance;
+    cmp.searchValue.emit('test');
+    expect(component.tableSearch).toHaveBeenCalledWith('test');
+  });
 });

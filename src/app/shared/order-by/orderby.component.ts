@@ -4,10 +4,14 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'orderBy',
   templateUrl: './orderby.component.html'
 })
 export class OrderByComponent implements OnInit , OnDestroy {
+  click(): any {
+    throw new Error("Method not implemented.");
+  }
 
 
   constructor(

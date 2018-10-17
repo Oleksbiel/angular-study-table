@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { PostService } from './post.service';
 
 @Component({
@@ -7,15 +7,26 @@ import { PostService } from './post.service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  someMethod(): any {
-    throw new Error("Method not implemented.");
-  }
+  // someMethod(): any {
+  //   throw new Error("Method not implemented.");
+  // }
 
   public posts: Array<TPost>;
   public orderChange: EventEmitter<any> = new EventEmitter();
 
   public sortedFieldData: Array<TPost>;
   public searchTitle: String;
+
+
+  private manipulateData(searchTitle , sortedPostObj) {
+    const manipPosts = {
+      searchTitle: searchTitle,
+      sort: sortedPostObj
+    };
+    this._postServices.searchSortPosts(manipPosts).subscribe(posts => this.posts = posts);
+  }
+
+
 
   constructor(private _postServices: PostService) {}
 
@@ -32,13 +43,6 @@ export class PostComponent implements OnInit {
   public postDelete(postID: number) {
     this._postServices.deletePost(postID).subscribe(post => this.getAll());
   }
-  public manipulateData(searchTitle , sortedPostObj) {
-    const manipPosts = {
-      searchTitle: searchTitle,
-      sort: sortedPostObj
-    };
-    this._postServices.searchSortPosts(manipPosts).subscribe(posts => this.posts = posts);
-  }
   public searchReset () {
     this.getAll();
     this.searchTitle = undefined;
@@ -47,15 +51,10 @@ export class PostComponent implements OnInit {
   public tableSearch(searchTitle) {
     this.searchTitle = searchTitle;
     this.manipulateData(searchTitle, this.sortedFieldData);
-    // this._postServices.filterPosts(searchTitle).subscribe(posts => {
-    //   this.posts = posts;
-    // });
   }
   public sortData(sortfieldData) {
     this.sortedFieldData = sortfieldData;
     this.manipulateData(this.searchTitle, sortfieldData);
-
-    // this._postServices.sortPosts(sortfieldData).subscribe(posts => this.posts = posts);
     this.orderChange.next(sortfieldData);
   }
 }
